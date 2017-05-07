@@ -285,7 +285,7 @@
                                     <div class="col-sm-8 objective-media">
                                         <div class="imgContainer" ng-repeat="i in consultation.images">
                                             <div><i class="fa fa-trash fa-lg m-b-sm text-danger pointer" ng-click="deleteImage(i.id,$index)"></i> </div>
-                                            <img ng-src="http://localhost:63392/images/{{i.imageName}}" onclick="window.open(this.src)" class="pointer" height="auto" width="200" />
+                                            <img ng-src="{{appSettings.serverPath}}/images/{{i.imageName}}" onclick="window.open(this.src)" class="pointer" height="auto" width="200" />
                                         </div>
                                         <div ng-show="consultation.images.length == 0" class="m-t-xs">
                                             <i class="fa fa-briefcase"></i> No Images

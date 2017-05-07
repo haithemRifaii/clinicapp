@@ -108,7 +108,7 @@
                                                         <td>{{ pat.entryDate | date : format : "LLLL" }}</td>
                                                         <td style="border-right: 0px;">{{ pat.mobile }}</td>
                                                         <td class="text-center fooo" style="border-left: 0px;">
-                                                            <a ng-href="http://localhost:16322/#/consultation/new_consultation/{{pat.id}}" target="_blank">Kawther</a>
+                                                        <a ng-href="{{patlist.serverPath}}/#/consultation/new_consultation/{{pat.id}}" target="_blank">Kawther</a>
                                                             <div class="btn-group" dropdown>
                                                                 <button id="split-button" type="button" class="btn btn-primary btn-xs" ui-sref="consultation.consultation_list({patientid: pat.id })">Consultations</button>
                                                                 <button type="button" class="btn btn-primary btn-xs" dropdown-toggle>

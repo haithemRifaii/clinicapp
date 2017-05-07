@@ -6,55 +6,55 @@
 //  |                        newDoctor         
 //  |                                                                         |
 //  + ----------------------------------------------------------------------- +
-function newDoctor(doctorResource, toaster, notify) {
-    var vm = this;
-    vm.doctor = {};
-    vm.inspiniaTemplate = 'views/common/notify.html';
+    function newDoctor(doctorResource, toaster, notify) {
+        var vm = this;
+        vm.doctor = {};
+        vm.inspiniaTemplate = 'views/common/notify.html';
 
 
-    vm.doctor = new doctorResource;
+        vm.doctor = new doctorResource;
             
-    vm.doctor.birthday = new Date();
-    vm.doctor.mobile = "";
-    vm.doctor.phone = "";
-    vm.doctor.type = "doctor";
+        vm.doctor.birthday = new Date();
+        vm.doctor.mobile = "";
+        vm.doctor.phone = "";
+        vm.doctor.type = "doctor";
 
-    vm.doctor.expiryDate = new Date();
-    vm.doctor.isExpired = false;
+        vm.doctor.expiryDate = new Date();
+        vm.doctor.isExpired = false;
             
-    //});
+        //});
 
-    vm.submit = function () {
-        vm.loading = true;
+        vm.submit = function () {
+            vm.loading = true;
         
-        vm.doctor.$save(
-            function (data) {
-                vm.loading = false;
-                vm.originalProduct = angular.copy(data);
-                toaster.pop('success', "Notification", "Doctor created successfully", 4000);
+            vm.doctor.$save(
+                function (data) {
+                    vm.loading = false;
+                    vm.originalProduct = angular.copy(data);
+                    toaster.pop('success', "Notification", "Doctor created successfully", 4000);
 
-            }, function (response) {
-                vm.loading = false;
-                if (response.data.modelState) {
-                    vm.message = '';
-                    for (var key in response.data.modelState) {
-                        vm.message += '<p>' + response.data.modelState[key] + "</p>";
+                }, function (response) {
+                    vm.loading = false;
+                    if (response.data.modelState) {
+                        vm.message = '';
+                        for (var key in response.data.modelState) {
+                            vm.message += '<p>' + response.data.modelState[key] + "</p>";
+                        }
+                        notify({ messageTemplate: vm.message, classes: 'alert-danger', templateUrl: vm.inspiniaTemplate, duration: '20000', position: 'left' });
                     }
-                    notify({ messageTemplate: vm.message, classes: 'alert-danger', templateUrl: vm.inspiniaTemplate, duration: '20000', position: 'left' });
-                }
 
-            });
-    };//end submit func
+                });
+        };//end submit func
 
-    vm.open = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        vm.opened = true;
-    };
-    vm.dateOptions = {
-        formatYear: 'yy',
-        startingDay: 1
-    };
+        vm.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            vm.opened = true;
+        };
+        vm.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
 
 }// end newdoctor controller
 
@@ -199,11 +199,11 @@ function newPatient(patientResource, toaster, notify, currentUser, $rootScope, $
 //  |                                                                         |
 //  + ----------------------------------------------------------------------- +
 
-function patientList(patientResource, DTOptionsBuilder, DTColumnBuilder, resolvedData) {
+function patientList(appSettings, patientResource, DTOptionsBuilder, DTColumnBuilder, resolvedData, appSettings) {
     var patlist = this;
     patlist.patients = {};
     patlist.patients = resolvedData;
-
+    patlist.appSettings = appSettings
 
     function nl2br(str, is_xhtml) {
         var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
@@ -245,7 +245,7 @@ function patientList(patientResource, DTOptionsBuilder, DTColumnBuilder, resolve
     //        data.append(key, data[key]);
     //    });
     //    jQuery.ajax({
-    //        url: 'http://localhost:63392/api/uploadTest',
+    //        url: 'http://:63392/api/uploadTest',
     //        data: data,
     //        cache: false,
     //        contentType: false,
@@ -268,8 +268,9 @@ function patientList(patientResource, DTOptionsBuilder, DTColumnBuilder, resolve
 //  |                                                                         |
 //  + ----------------------------------------------------------------------- +
 
-function newConsultation($scope, $stateParams, consultationResource, $rootScope, notify, toaster, $state, FileUploader, patientResource) {
+function newConsultation(appSettings,$scope, $stateParams, consultationResource, $rootScope, notify, toaster, $state, FileUploader, patientResource) {
 
+    $scope.appSettings = appSettings
     $scope.idOfpatient = $stateParams.patientid;
     //$scope.patient.entryDate = new Date();
     patientResource.patient.get({ id: $scope.idOfpatient }).$promise.then(function (data) {
@@ -286,7 +287,7 @@ function newConsultation($scope, $stateParams, consultationResource, $rootScope,
     //----------------------------
     var uploader = $scope.uploader = new FileUploader({
         // url: 'upload.php'
-        url: 'http://localhost:63392/api/consultations/uploadTest',
+        url: appSettings.serverPath +'/api/consultations/uploadTest',
         formData: null,
     });
 
@@ -455,9 +456,10 @@ function consultationList($scope, resolvedData, $stateParams,toaster, patientRes
 //  |                        consultationView         
 //  |                                                                         |
 //  + ----------------------------------------------------------------------- +
-function consultationView($scope, resolvedData, consultationResource, toaster, patientResource) {
+function consultationView(appSettings,$scope, resolvedData, consultationResource, toaster, patientResource) {
     $scope.consultation = resolvedData;
     $scope.idOfpatient = resolvedData.patientId;
+    $scope.appSettings = appSettings
 
     patientResource.patient.get({ id: $scope.idOfpatient }).$promise.then(function (data) {
         $scope.patientHistory = data.medicalStatus;
@@ -481,11 +483,13 @@ function consultationView($scope, resolvedData, consultationResource, toaster, p
 //  |                        editConsultation         
 //  |                                                                         |
 //  + ----------------------------------------------------------------------- +
-function editConsultation($scope, $stateParams, resolvedData, consultationResource, toaster, notify, $state, FileUploader, patientResource, $rootScope) {
+function editConsultation(appSettings,$scope, $stateParams, resolvedData, consultationResource, toaster, notify, $state, FileUploader, patientResource, $rootScope) {
 
+    $scope.appSettings = appSettings
     $scope.consultation = {};
     $scope.consultation = resolvedData;
     $scope.consultation.medicalStatus = {}
+    $scope.appSettings = appSettings
 
     patientResource.patient.get({ id: $scope.consultation.patientId }).$promise.then(function (data) {
         $scope.patientHistory = data.medicalStatus;
@@ -503,7 +507,7 @@ function editConsultation($scope, $stateParams, resolvedData, consultationResour
     //----------------------------
     var uploader = $scope.uploader = new FileUploader({
         // url: 'upload.php'
-        url: 'http://localhost:63392/api/consultations/uploadTest',
+        url: appSettings.serverPath +'/api/consultations/uploadTest',
         formData: null,
     });
 
@@ -609,10 +613,12 @@ function editConsultation($scope, $stateParams, resolvedData, consultationResour
 //  |                                                                         |
 //  + ----------------------------------------------------------------------- +
 
-function newFollowUp($scope, $stateParams, followUpResource, $rootScope, toaster, $state, FileUploader, patientResource, consultationResource, $rootScope) {
+function newFollowUp(appSettings,$scope, $stateParams, followUpResource, $rootScope, toaster, $state, FileUploader, patientResource, consultationResource, $rootScope) {
 
+    $scope.appSettings = appSettings
     // idOfpatient used to inject in header menu
     $scope.idOfpatient = $stateParams.patientid;
+    $scope.appSettings = appSettings
 
     patientResource.patient.get({ id: $scope.idOfpatient }).$promise.then(function (data) {
         $scope.patientHistory = data.medicalStatus;
@@ -637,7 +643,7 @@ function newFollowUp($scope, $stateParams, followUpResource, $rootScope, toaster
     //----------------------------
     var uploader = $scope.uploader = new FileUploader({
         // url: 'upload.php'
-        url: 'http://localhost:63392/api/followup/uploadTest',
+        url: appSettings.serverPath +'/api/followup/uploadTest',
         formData: null,
     });
 
@@ -738,8 +744,9 @@ function newFollowUp($scope, $stateParams, followUpResource, $rootScope, toaster
 //  |                        editFollowUp         
 //  |                                                                         |
 //  + ----------------------------------------------------------------------- +
-function editFollowUp($scope, $stateParams, resolvedData, followUpResource, toaster, notify, $state, FileUploader, patientResource, consultationResource, $rootScope) {
+function editFollowUp(appSettings,$scope, $stateParams, resolvedData, followUpResource, toaster, notify, $state, FileUploader, patientResource, consultationResource, $rootScope) {
 
+    $scope.appSettings = appSettings
     $scope.followUp = {};
     $scope.followUp = resolvedData;
     $scope.idOfpatient = $stateParams.patientid;
@@ -763,7 +770,7 @@ function editFollowUp($scope, $stateParams, resolvedData, followUpResource, toas
     //----------------------------
     var uploader = $scope.uploader = new FileUploader({
         // url: 'upload.php'
-        url: 'http://localhost:63392/api/followup/uploadTest',
+        url: appSettings.serverPath +'/api/followup/uploadTest',
         formData: null,
     });
 
@@ -866,8 +873,9 @@ function editFollowUp($scope, $stateParams, resolvedData, followUpResource, toas
 //  + ----------------------------------------------------------------------- +
 
 
-function viewFollowUp($scope, resolvedData, $stateParams, consultationResource, toaster, patientResource) {
+function viewFollowUp(appSettings,$scope, resolvedData, $stateParams, consultationResource, toaster, patientResource) {
     $scope.followup = resolvedData;
+    $scope.appSettings = appSettings
     console.log(resolvedData)
     $scope.idOfpatient = $stateParams.patientid;
     patientResource.patient.get({ id: $scope.idOfpatient }).$promise.then(function (data) {
@@ -1824,19 +1832,21 @@ function MainCtrl(patientResource, $scope) {
 
 };
 
-angular
-    .module('inspinia')
-    .controller('MainCtrl', MainCtrl)
-    .controller('modalDemoCtrl', modalDemoCtrl)
-    .controller('CalendarCtrl', CalendarCtrl)
-    .controller('patientList', patientList)
-    .controller('viewPatient', viewPatient)
-    .controller('editPatient', editPatient)
-    .controller('newConsultation', newConsultation)
-    .controller('consultationList', consultationList)
-    .controller('consultationView', consultationView)
-    .controller('editConsultation', editConsultation)
-    .controller('newFollowUp', newFollowUp)
-    .controller('editFollowUp', editFollowUp)
-    .controller('newPatient', ['patientResource', newPatient])
-    .controller('newDoctor', ['doctorResource', newDoctor]); 
+//angular
+//    .module('inspinia')
+//    .controller('MainCtrl', MainCtrl)
+//    .controller('modalDemoCtrl', modalDemoCtrl)
+//    .controller('CalendarCtrl', CalendarCtrl)
+//    .controller('patientList', patientList)
+//    .controller('viewPatient', viewPatient)
+//    .controller('editPatient', editPatient)
+//    .controller('newConsultation', newConsultation)
+//    .controller('consultationList', consultationList)
+//    .controller('consultationView', consultationView)
+//    .controller('editConsultation', editConsultation)
+//    .controller('newFollowUp', newFollowUp)
+//    .controller('editFollowUp', editFollowUp)
+//    .controller('viewFollowUp', viewFollowUp)
+//    .controller('newPatient', ['patientResource', newPatient])
+//    .controller('newDoctor', ['doctorResource', newDoctor])
+//;
