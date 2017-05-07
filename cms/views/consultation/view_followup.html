@@ -1,0 +1,229 @@
+<div class="row wrapper border-bottom white-bg page-heading animated fadeInRight">
+    <div class="col-sm-5">
+        <h2>Consultation config</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li>
+                <a ui-sref="patient.patients_list">Patient list</a>
+            </li>
+            <li>
+                <a ui-sref="consultation.consultation_list({patientid:idOfpatient})">Consultation list</a>
+            </li>
+            <li class="active">
+                <strong>FollowUp details</strong>
+            </li>
+        </ol>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+            <div class="animated fadeInRightBig">
+
+                <div class="row m-b-md">
+                    <div class="col-lg-4">
+                        <div class="widget style1 navy-bg">
+                            <div class="row vertical-align">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-user fa-3x"></i>
+                                </div>
+                                <div class="col-xs-9 text-left" style="margin-top: 10px;">
+                                    <strong>{{patientResolved.displayName}}</strong> - {{age}} <span ng-show="age!=unkown">Year(s) old</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="widget style1 " ng-class="{'yellow-bg':patientHistory.allergies,'navy-bg':!patientHistory.allergies}">
+                            <div class="row vertical-align">
+                                <div class="col-xs-2">
+                                    <i class="fa  fa-3x" ng-class="{'fa-exclamation-circle':patientHistory.allergies,'fa-check-circle':!patientHistory.allergies}"></i>
+                                </div>
+                                <div class="col-xs-9 text-left" style="margin-top: 10px;">
+                                    <!--<strong class="ca">Allergies</strong>-->  {{patientHistory.allergies}} <span ng-show="!patientHistory.allergies">No Allergies</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="tabs-container">
+                    <form method="get" class="form-horizontal" style="margin-top:15px;">
+                        <tabset>
+                            <tab heading="Condition">
+
+                                <div class="form-group m-t-lg">
+                                    <label class="col-sm-2 control-label">Condition </label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static">{{followup.condition}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Title</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static">{{followup.title}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group ">
+                                    <label class="col-sm-2 control-label">Entry Date </label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static ">{{followup.entryDate}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Subjective :</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static ">{{followup.subjective}}</p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </tab>
+
+                            <tab heading="Objective" active="tabObjective">
+
+                                <div class="form-group m-t-lg">
+                                    <label class="col-sm-2 control-label">Physical Exam :</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static ">{{followup.physicalExam}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Lab :</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static ">{{followup.lab}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Radiology :</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static ">{{followup.radiology}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Consultations :</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static ">{{followup.consultations}}</p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </tab>
+
+                            <tab heading="Assessment" active="tabAssessment">
+
+                                <div class="form-group m-t-lg">
+                                    <label class="col-sm-2 control-label">Assessment :</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static ">{{followup.assessment}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                            </tab>
+
+                            <tab heading="Treatment Plan" active="tabTreatment">
+
+                                <div class="form-group m-t-lg">
+                                    <label class="col-sm-2 control-label">Medication :</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static ">{{followup.medication}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Surgery :</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static ">{{followup.surgery}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Recommendation :</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static ">{{followup.recommendation}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Other :</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static ">{{followup.other}}</p>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </tab>
+
+                            <tab heading="Note" active="tabNote">
+                                <div class="form-group m-t-lg">
+                                    <label class="col-sm-2 control-label">Note :</label>
+                                    <div class="col-sm-8">
+                                        <p class="form-control-static static ">{{followup.additionalInformation}}</p>
+                                    </div>
+                                </div>
+                            </tab>
+
+                            <tab heading="Images">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Images :</label>
+                                    <div class="col-sm-8 objective-media">
+                                        <div class="imgContainer" ng-repeat="i in followup.images">
+                                            <div><i class="fa fa-trash fa-lg m-b-sm text-danger pointer" ng-click="deleteImage(i.id,$index)"></i> </div>
+                                            <img ng-src="http://localhost:63392/images/{{i.imageName}}" onclick="window.open(this.src)" class="pointer" height="auto" width="200" />
+                                        </div>
+                                        <div ng-show="followup.images.length == 0" class="m-t-xs">
+                                            <i class="fa fa-briefcase"></i> No Images
+                                        </div>
+                                        <div style="clear:both;"></div>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab heading="Related">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">New Condition Visit</label>
+                                    <div class="col-sm-6 col-sm-offset-1 m-t-xs">
+                                        <a ui-sref="consultation.view_consultation({consultationId:followup.consultationId})">View Consultation</a>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">FollowUp Visits</label>
+                                    <div class="col-sm-6 col-sm-offset-1">
+                                        <div ng-repeat="follow in parentConsultation.followUps" class="m-b-xs">
+                                            <a ui-sref="consultation.view_followup({patientid:idOfpatient,followupId:follow.id})" >{{follow.title}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-4">
+                                        <button class="btn btn-white col-sm-12" type="submit" ui-sref="consultation.edit_followup({patientid:idOfpatient,followupId:followup.id})"><i class="fa fa-edit"></i>&nbsp;Edit</button>
+                                    </div>
+                                </div>
+                            </tab>
+                        </tabset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
