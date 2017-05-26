@@ -130,7 +130,7 @@
                                         </form>
                                         <div class="clearfix"></div>
                                         <span ng-show="consultation.followUps.length === 0"><i class="fa fa-briefcase"></i>&nbsp;&nbsp;No FollowUp Visits</span>
-                                        <div ng-repeat="var in consultation.followUps" ng-show="var.isDeleted===false" class="m-t-xs">
+                                        <div ng-repeat="var in consultation.followUps | orderBy: 'entryDate':true" ng-show="var.isDeleted===false" class="m-t-xs">
                                             <accordion-group >
                                                 <accordion-heading>
                                                     {{var.title}}

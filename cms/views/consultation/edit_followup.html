@@ -27,7 +27,7 @@
                         <div class="widget style1 navy-bg">
                             <div class="row vertical-align">
                                 <div class="col-xs-2">
-                                    <i class="fa fa-user fa-3x"></i>
+                                    <a class="fa fa-user fa-3x text-white" tooltip="Click to edit patient" ng-href="/#/patient/edit_patient/{{patientResolved.id}}" target="_blank"></a>
                                 </div>
                                 <div class="col-xs-9 text-left" style="margin-top: 10px;">
                                     <strong>{{patientResolved.displayName}}</strong> - {{age}} <span ng-show="age!=unkown">Year(s) old</span>

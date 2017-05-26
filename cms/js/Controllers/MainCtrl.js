@@ -2,9 +2,15 @@
 angular
     .module('inspinia')
     .controller('MainCtrl', MainCtrl)
+    .filter('timeAgo', timeAgo)
 ;
 
-function MainCtrl(patientResource, $scope) {
+function MainCtrl(patientResource, $scope,$rootScope) {
+
+    $rootScope.main = {
+        clinicId: "0AA75235-15D1-11E6-9663-005056C00111",
+        doctorId: "0AA75235-15D1-11E6-9663-005056C00112"
+    }
 
     this.maxdate1 = moment();
     this.maxdate = moment();
@@ -299,4 +305,19 @@ function MainCtrl(patientResource, $scope) {
     //    postfix: " $"
     //};
 
+};
+
+function timeAgo() {
+    return function (x) {
+        var res = x;
+        if (moment(x).isValid()) {
+            if (moment.isDate(new Date(x)) && x && moment(new Date(x)).isValid()) {
+                var date = moment(new Date(x));
+                res = moment(date, "YYYYMMDD").fromNow();
+            }
+        }
+
+
+        return res;
+    };
 };
