@@ -249,7 +249,13 @@
                                                 <span class="badge pull-right">{{followup.entryDate | date: format:"LLLL"}}</span>
                                             </a>
                                         </div>
-                                        <button class="btn btn-primary" ui-sref="consultation.new_followup({patientid:idOfpatient,consultationId:consultation.id})">Create new followup</button>
+
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-warning" ui-sref="consultation.new_consultation({patientid:idOfpatient})"><i class="fa fa-plus"></i>&nbsp;New Condition</button>
+                                            <button type="button" class="btn btn-white" ui-sref="consultation.edit_consultation({patientid:idOfpatient,consultationId:consultation.id})"><i class="fa fa-edit"></i>&nbsp;Edit consultation</button>
+                                            <button type="button" class="btn btn-primary" ui-sref="consultation.new_followup({patientid:idOfpatient,consultationId:consultation.id})"><i class="fa fa-plus"></i>&nbsp;New Followup</button>
+                                        </div>
+                                        <!--<button class="btn btn-primary" ui-sref="consultation.new_followup({patientid:idOfpatient,consultationId:consultation.id})">Create new followup</button>-->
                                     </div>
                                 </div>
                             </tab>

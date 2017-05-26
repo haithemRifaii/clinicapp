@@ -214,10 +214,10 @@
                                 </div>
 
                                 <div class="hr-line-dashed"></div>
-                                <div class="form-group">
-                                    <div class="col-sm-4 col-sm-offset-4">
-                                        <button class="btn btn-white col-sm-12" type="submit" ui-sref="consultation.edit_followup({patientid:idOfpatient,followupId:followup.id})"><i class="fa fa-edit"></i>&nbsp;Edit</button>
-                                    </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-warning" ui-sref="consultation.new_consultation({patientid:idOfpatient})"><i class="fa fa-plus"></i>&nbsp;New Condition</button>
+                                    <button type="button" class="btn btn-white" ui-sref="consultation.edit_followup({patientid:idOfpatient,followupId:followup.id})"><i class="fa fa-edit"></i>&nbsp;Edit FollowUp</button>
+                                    <button type="button" class="btn btn-primary"  ui-sref="consultation.new_followup({patientid:idOfpatient,consultationId:parentConsultation.id})"><i class="fa fa-plus"></i>&nbsp;New Followup</button>
                                 </div>
                             </tab>
                         </tabset>

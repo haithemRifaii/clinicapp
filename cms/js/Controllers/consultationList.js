@@ -8,6 +8,8 @@ function consultationList($scope, resolvedData, $stateParams, toaster, patientRe
     $scope.consultations = resolvedData;
     $scope.idOfpatient = $stateParams.patientid;
 
+    console.log($scope.consultations)
+
     patientResource.patient.get({ id: $scope.idOfpatient }).$promise.then(function (response) {
         console.log(response)
         $scope.patient = response;
